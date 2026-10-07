@@ -1,5 +1,63 @@
 # Supply Chain & Inventory Management Platform
+# Supply Chain & Inventory Management Platform
 
+![Status](https://img.shields.io/badge/Status-In%-orange
+![Business Analysis](https://img.shields.io/badge/ABOK-blue
+![BPMN](https://img.shields.io/badge/BPMN-2.0-green/img.shields.io/badge/UML-PlantUML-purple
+![OOAD](https://img.shields.io/badge/OOAD20Analysis-darkblue
+![Documentation](https://img.shields.io/badge/erprise-success
+![Repository](https://img.shields.io/badge/GitHubck
+![License](https://img.shdge/License-MIT-yellow
+
+---
+
+## Table of Contents
+
+- [project-overview
+- [Business-problem
+- [project-vision
+- [mission-statement
+- [Strategic Objectives](#strategic-objectives
+- #project-scope
+  - #supplier-management
+  - [Procurement-management
+  - [Inventory-management
+  - #warehouse-management
+  - #shipment-management
+  - [Reporting and Analytics](#reportingcope
+- #target-organization
+- [business-challenges
+- [Expected Benefits](#expected-benefits#tools
+- [repository-structure
+- #project-lifecycle
+  - [Phase 0 - Project setup
+  - [Phase 1 - Project Initiation](#phase-1---project-initiation)
+
+  - #phase-3---requirements-engineering
+  - #phase-4---business-rules-analysis
+  - #phase-5---process-analysis
+  - #phase-6---data-analysis
+  - #phase-7---uml-analysis
+  - #phase-8---solution-design
+  - #phase-9---traceability-and-validation
+  - #phase-10---kpi-analysis
+  - [Phase 11 - Final Documentation](#phase-11---es
+  - #project-initiation-deliverables
+  - #business-analysis-deliverables
+  - #scope-deliverables
+  - [Requirements Deliverables](#- #business-rules-deliverables
+  - #bpmn-deliverables
+  - [Data Modeling Deliverables](#dataML Deliverables](#uml-deleliverables
+  - #traceability-deliverables
+  - [KPI Deliverables](#kpi-deliverablesables
+- #key-stakeholders
+- [Expected Artifacts
+- [learning-outcomes
+- #portfolio-value
+- #author
+- #status
+
+---
 ## Project Overview
 
 The Supply Chain & Inventory Management Platform is an end-to-end Business Analysis and System Analysis portfolio project focused on the analysis, design and documentation of a centralized solution supporting procurement, inventory management, warehouse operations, shipment management and operational reporting.
