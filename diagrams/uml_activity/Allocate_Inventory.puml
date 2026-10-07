@@ -1,0 +1,32 @@
+@startuml
+|Order System|
+start
+:Trigger Stock Allocation Request;
+
+|Inventory Service|
+:Query Current Stock for SKU;
+:Calculate Available Stock (Total - Allocated);
+
+if (Available >= Requested?) then (yes)
+  :Deduct Requested from Available;
+  :Add Requested to Allocated;
+  :Save Transaction Log;
+  
+  |Warehouse Service|
+  :Identify Optimal Pick Bins;
+  :Generate Pick Task for Operator;
+else (no)
+  |Inventory Service|
+  :Reject Allocation Request;
+  :Generate "Out of Stock" Alert;
+  
+  |Procurement Service|
+  :Check if PO already exists for SKU;
+  if (PO Exists?) then (yes)
+    :Link Order to existing PO (Backorder);
+  else (no)
+    :Trigger Auto-Purchase Request;
+  endif
+endif
+stop
+@enduml

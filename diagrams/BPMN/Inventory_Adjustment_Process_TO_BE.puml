@@ -1,0 +1,36 @@
+@startuml
+|Warehouse Operator|
+start
+:Perform Cycle Count on Bin B2;
+:Identify Discrepancy (Physical != System);
+:Enter Adjusted Quantity in Mobile App;
+:Select Reason Code (e.g., "Damage", "Missing");
+
+|System|
+:Calculate Variance Value ($);
+if (Variance Value > $500?) then (yes)
+  :Status = "Pending Approval";
+  :Notify Warehouse Manager;
+  
+  |Warehouse Manager|
+  :Review Adjustment Request;
+  if (Approve?) then (yes)
+    |System|
+    :Update Ledger Quantity;
+  else (no)
+    |System|
+    :Reject Adjustment;
+    |Warehouse Manager|
+    :Request Recount;
+    stop
+  endif
+else (no)
+  |System|
+  :Auto-Approve Adjustment;
+  :Update Ledger Quantity;
+endif
+
+|System|
+:Log Adjustment in Audit Trail;
+stop
+@enduml

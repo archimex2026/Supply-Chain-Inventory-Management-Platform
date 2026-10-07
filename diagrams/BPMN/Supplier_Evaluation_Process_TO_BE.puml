@@ -1,0 +1,28 @@
+@startuml
+|System|
+start
+:Trigger Monthly Evaluation Batch;
+:Fetch all closed POs for Supplier X;
+:Calculate On-Time Delivery (OTD) %;
+:Calculate Quality Pass Rate %;
+:Compute Overall Score (60% OTD, 40% Quality);
+
+|Procurement Manager|
+if (Overall Score < 60%?) then (yes)
+  |System|
+  :Flag Supplier Status as "Under Review";
+  :Generate Warning Email;
+  
+  |Procurement Manager|
+  :Review Supplier Performance;
+  if (Terminate Contract?) then (yes)
+    :Mark Supplier as "Inactive";
+  else (no)
+    :Schedule Feedback Meeting;
+  endif
+else (no)
+  |System|
+  :Update Supplier Score in Database;
+endif
+stop
+@enduml

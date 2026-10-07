@@ -1,0 +1,15 @@
+@startuml
+[*] --> Planned : Shipment Created
+Planned --> ReadyForDispatch : Inventory Picked & Packed
+ReadyForDispatch --> Dispatched : Carrier Scanned Package
+Dispatched --> InTransit : Left Warehouse Dock
+InTransit --> Delayed : Weather or Route Exception
+Delayed --> InTransit : Exception Cleared
+InTransit --> OutForDelivery : At Final Delivery Hub
+OutForDelivery --> Delivered : Customer Signed
+OutForDelivery --> FailedAttempt : Customer Not Available
+FailedAttempt --> OutForDelivery : Redelivery Scheduled
+FailedAttempt --> ReturnedToSender : Max Attempts Reached
+Delivered --> [*]
+ReturnedToSender --> [*]
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Warehouse Operator" as WO
+actor "Inventory Analyst" as IA
+actor "System" as SYS
+
+rectangle "Inventory Module" {
+  usecase "Receive Goods" as UC1
+  usecase "Allocate Stock" as UC2
+  usecase "Perform Cycle Count" as UC3
+  usecase "Adjust Inventory Quantity" as UC4
+  usecase "Quarantine Stock" as UC5
+  usecase "Generate Low Stock Alert" as UC6
+}
+
+WO --> UC1
+WO --> UC3
+WO --> UC5
+
+IA --> UC2
+IA --> UC4
+IA --> UC5
+
+SYS --> UC6
+
+UC4 ..> UC5 : <<includes>>
+@enduml

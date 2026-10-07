@@ -1,0 +1,21 @@
+@startuml
+autonumber
+actor "Order System" as OS
+participant "Inventory Service" as InvSvc
+participant "Warehouse Service" as WhsSvc
+database "Database" as DB
+
+OS -> InvSvc : reserveStock(SKU, requestedQty)
+InvSvc -> DB : SELECT qty_on_hand, allocated_qty FROM Inventory WHERE sku = SKU
+DB --> InvSvc : availableQty = (qty_on_hand - allocated_qty)
+
+alt availableQty >= requestedQty
+    InvSvc -> DB : UPDATE Inventory SET allocated_qty = allocated_qty + requestedQty
+    DB --> InvSvc : Success
+    InvSvc -> WhsSvc : generatePickTask(SKU, requestedQty)
+    WhsSvc --> InvSvc : pickTaskID
+    InvSvc --> OS : Success (Reservation Confirmed, Task: pickTaskID)
+else availableQty < requestedQty
+    InvSvc --> OS : Error (Insufficient Stock, Available: availableQty)
+end
+@enduml

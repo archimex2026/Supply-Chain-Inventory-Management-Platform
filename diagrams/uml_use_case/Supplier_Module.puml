@@ -1,0 +1,28 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Procurement Officer" as PO
+actor "System" as SYS
+actor "Supplier" as SUP
+
+rectangle "Supplier Management Module" {
+  usecase "Register New Supplier" as UC1
+  usecase "Update Supplier Details" as UC2
+  usecase "Deactivate Supplier" as UC3
+  usecase "Submit Required Documents" as UC4
+  usecase "Calculate Supplier Rating" as UC5
+  usecase "Generate Warning (Low Rating)" as UC6
+}
+
+PO --> UC1
+PO --> UC2
+PO --> UC3
+
+SUP --> UC4
+
+SYS --> UC5
+SYS --> UC6
+
+UC5 ..> UC6 : <<extends>>
+@enduml
