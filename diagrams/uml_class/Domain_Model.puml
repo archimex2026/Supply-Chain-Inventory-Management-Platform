@@ -1,0 +1,67 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Supplier {
+  - supplierID: String
+  - name: String
+  - contactInfo: String
+  - performanceRating: Float
+  + registerSupplier()
+  + updateRating(rating: Float)
+}
+
+class PurchaseOrder {
+  - poNumber: String
+  - creationDate: Date
+  - totalAmount: Double
+  - status: POStatus
+  + approvePO()
+  + cancelPO()
+  + addLineItem(item: POLineItem)
+}
+
+class POLineItem {
+  - quantity: Integer
+  - unitPrice: Double
+  + calculateTotal(): Double
+}
+
+class InventoryItem {
+  - sku: String
+  - name: String
+  - quantityOnHand: Integer
+  - reorderPoint: Integer
+  - status: ItemStatus
+  + allocateStock(qty: Integer)
+  + receiveStock(qty: Integer)
+}
+
+class Warehouse {
+  - warehouseID: String
+  - location: String
+  - capacity: Integer
+  + addStorageBin(bin: StorageBin)
+}
+
+class StorageBin {
+  - binID: String
+  - aisle: String
+  - maxWeight: Double
+}
+
+class Shipment {
+  - shipmentID: String
+  - dispatchDate: Date
+  - expectedDelivery: Date
+  - status: ShipmentStatus
+  + updateStatus(newStatus: ShipmentStatus)
+}
+
+Supplier "1" -- "0..*" PurchaseOrder : "receives"
+PurchaseOrder "1" *-- "1..*" POLineItem : "contains"
+POLineItem "0..*" -- "1" InventoryItem : "orders"
+Warehouse "1" *-- "1..*" StorageBin : "contains"
+StorageBin "1" o-- "0..*" InventoryItem : "stores"
+Shipment "1" o-- "1..*" InventoryItem : "transports"
+
+@enduml

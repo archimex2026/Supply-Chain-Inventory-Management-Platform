@@ -1,0 +1,39 @@
+@startuml
+|Procurement Officer|
+start
+:Identify Material Shortage;
+:Create Purchase Request (PR);
+|Department Manager|
+if (PR Amount > Approval Threshold?) then (yes)
+  :Review PR;
+  if (Approved?) then (yes)
+    :Approve PR;
+  else (no)
+    :Reject PR;
+    stop
+  endif
+else (no)
+  :Auto-Approve PR;
+endif
+
+|Procurement Officer|
+:Select Supplier;
+:Generate Purchase Order (PO);
+:Send PO to Supplier;
+
+|Supplier|
+:Acknowledge PO;
+:Prepare Goods for Dispatch;
+
+|Warehouse Operator|
+:Receive Goods;
+:Perform Quality Inspection;
+if (Quality OK?) then (yes)
+  :Register Goods Receipt (GR);
+  :Update Inventory System;
+else (no)
+  :Reject Goods;
+  :Initiate Return Process;
+endif
+stop
+@enduml

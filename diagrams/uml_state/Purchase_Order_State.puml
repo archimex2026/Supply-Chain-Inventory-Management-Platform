@@ -1,0 +1,16 @@
+@startuml
+[*] --> Draft : Auto-generated from PR or created manually
+Draft --> Pending_Approval : Submitted (Total > $10k)
+Draft --> Approved : Auto-approved (Total <= $10k)
+Pending_Approval --> Approved : Manager signs off
+Pending_Approval --> Rejected : Manager rejects
+Approved --> Dispatched : Emailed to Supplier
+Dispatched --> Acknowledged : Supplier confirms receipt
+Acknowledged --> Partially_Fulfilled : Some goods received
+Acknowledged --> Fulfilled : All goods received
+Partially_Fulfilled --> Fulfilled : Remaining goods received
+
+Rejected --> [*]
+Fulfilled --> Closed : Invoice paid & settled
+Closed --> [*]
+@enduml

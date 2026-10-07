@@ -1,0 +1,43 @@
+@startuml
+|Procurement Officer|
+start
+:Review Draft Purchase Request;
+:Select Supplier from Approved List;
+:Enter Negotiated Price & Quantity;
+:Submit for Creation;
+
+|System|
+:Validate Data (Tax ID, Supplier Status);
+if (Validation Passed?) then (yes)
+  :Calculate Total Value;
+  if (Total Value > $10,000?) then (yes)
+    :Set Status = "Pending Approval";
+    :Send Notification to Manager;
+    
+    |Department Manager|
+    :Review PO;
+    if (Approve?) then (yes)
+      |System|
+      :Set Status = "Approved";
+    else (no)
+      |System|
+      :Set Status = "Rejected";
+      :Notify Procurement Officer;
+      stop
+    endif
+  else (no)
+    |System|
+    :Set Status = "Approved" (Auto-Approve);
+  endif
+  
+  |System|
+  :Generate PDF Document;
+  :Email PDF to Supplier;
+  :Set Status = "Dispatched";
+  
+else (no)
+  :Display Error "Invalid Supplier Status";
+endif
+|Procurement Officer|
+stop
+@enduml

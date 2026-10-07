@@ -1,0 +1,17 @@
+@startuml
+[*] --> Ordered : Purchase Order placed
+Ordered --> InTransit : Supplier dispatches
+InTransit --> Received : Goods arrive at dock
+Received --> Quarantined : Failed Quality Check
+Quarantined --> Returned : Sent back to Supplier
+Quarantined --> Available : Quality Check passed after review
+Received --> Available : Passed Quality Check
+Available --> Allocated : Reserved for Shipment
+Allocated --> Shipped : Dispatched to Customer
+Shipped --> [*]
+
+Available --> Damaged : Damaged in Warehouse
+Damaged --> WrittenOff : Discarded
+WrittenOff --> [*]
+Returned --> [*]
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+autonumber
+actor "Procurement Officer" as PO
+participant "UI: Dashboard" as UI
+participant "Procurement Controller" as Ctrl
+participant "Inventory Service" as InvSvc
+database "Database" as DB
+
+PO -> UI : Clicks "Create PO"
+UI -> Ctrl : initCreatePO()
+Ctrl -> InvSvc : getLowStockItems()
+InvSvc -> DB : SELECT * FROM Inventory WHERE qty <= reorderPoint
+DB --> InvSvc : lowStockItems
+InvSvc --> Ctrl : lowStockList
+Ctrl --> UI : Display low stock items
+
+PO -> UI : Select items, enter quantities
+PO -> UI : Submit PO
+UI -> Ctrl : submitPO(poData)
+Ctrl -> DB : INSERT INTO PurchaseOrder (status='Pending')
+DB --> Ctrl : poID
+
+alt PO Total > 10,000
+    Ctrl -> DB : UPDATE PurchaseOrder SET status='Pending Approval'
+    Ctrl -> UI : Show "PO Sent for Manager Approval"
+else PO Total <= 10,000
+    Ctrl -> DB : UPDATE PurchaseOrder SET status='Approved'
+    Ctrl -> UI : Show "PO Approved & Created"
+end
+
+@enduml

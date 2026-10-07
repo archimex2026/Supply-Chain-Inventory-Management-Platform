@@ -1,0 +1,31 @@
+@startuml
+!theme plain
+top to bottom direction
+
+node "Procurement Module" as Proc
+node "Inventory Module" as Inv
+node "Warehouse Module" as Whs
+node "Shipment Module" as Shp
+node "Reporting Module" as Rep
+
+database "Central Database" as DB {
+  [Supplier Data]
+  [PO Data]
+  [Inventory Ledger]
+  [Shipment Logs]
+}
+
+Proc --> [Supplier Data] : Reads/Writes
+Proc --> [PO Data] : Writes
+Inv --> [PO Data] : Reads (For GR)
+Inv --> [Inventory Ledger] : Writes (Stock updates)
+Whs --> [Inventory Ledger] : Reads (Find items)
+Shp --> [Inventory Ledger] : Writes (Deducts stock)
+Shp --> [Shipment Logs] : Writes
+
+Rep <-- [Supplier Data] : Reads
+Rep <-- [PO Data] : Reads
+Rep <-- [Inventory Ledger] : Reads
+Rep <-- [Shipment Logs] : Reads
+
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+
+package "LogiFlow Supply Chain Platform" {
+  
+  package "Frontend (UI)" {
+    [Web Dashboard]
+    [Mobile Warehouse App]
+  }
+
+  package "Backend Services" {
+    [Procurement Service]
+    [Inventory Service]
+    [Warehouse Service]
+    [Shipment Service]
+    [Supplier Service]
+  }
+
+  package "Data Layer" {
+    database "Relational DB" {
+      [Inventory Tables]
+      [Order Tables]
+      [Supplier Tables]
+    }
+  }
+}
+
+[Web Dashboard] --> [Procurement Service]
+[Web Dashboard] --> [Supplier Service]
+[Web Dashboard] --> [Shipment Service]
+[Mobile Warehouse App] --> [Inventory Service]
+[Mobile Warehouse App] --> [Warehouse Service]
+
+[Procurement Service] --> [Order Tables]
+[Inventory Service] --> [Inventory Tables]
+[Warehouse Service] --> [Inventory Tables]
+[Shipment Service] --> [Order Tables]
+[Supplier Service] --> [Supplier Tables]
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+autonumber
+actor "Logistics Manager" as LM
+participant "Dashboard UI" as UI
+participant "Shipment Controller" as Ctrl
+participant "Inventory Service" as Inv
+participant "Carrier API" as API
+database "DB" as DB
+
+LM -> UI : Create Shipment(OrderID, Carrier)
+UI -> Ctrl : initShipment(data)
+Ctrl -> Inv : verifyAllocation(OrderID)
+Inv -> DB : SELECT * FROM Allocation WHERE order_id = OrderID
+DB --> Inv : Allocation Details
+Inv --> Ctrl : verified = true
+
+Ctrl -> API : POST /create_label (Dimensions, Weight)
+API --> Ctrl : trackingNumber, labelPDF
+
+Ctrl -> DB : INSERT INTO Shipment (status='Created', trackingNum)
+Ctrl -> DB : UPDATE Order SET status='Ready_For_Dispatch'
+DB --> Ctrl : Success
+
+Ctrl --> UI : Display Tracking # and Print Label
+LM -> UI : Print Label
+@enduml

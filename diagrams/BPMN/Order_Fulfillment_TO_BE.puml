@@ -1,0 +1,42 @@
+@startuml
+|Sales / Customer Service|
+start
+:Receive Customer Order;
+:Enter Order into System;
+
+|System|
+:Check Inventory Availability;
+if (Stock Available?) then (yes)
+  :Allocate Stock to Order;
+  :Generate Pick List;
+else (no)
+  :Flag as Backordered;
+  :Trigger Purchase Request;
+  stop
+endif
+
+|Warehouse Operator|
+:Receive Pick List on Mobile Device;
+:Navigate to Suggested Bin Locations;
+:Pick Items;
+:Scan Items at Packing Station;
+
+|System|
+:Verify Scanned Items against Order;
+if (Match?) then (yes)
+  :Generate Shipping Label;
+  :Deduct Quantity from Inventory (Shipment Issued);
+else (no)
+  :Alert Worker: Mismatch;
+  stop
+endif
+
+|Logistics/Carrier|
+:Load Packages;
+:Dispatch Truck;
+
+|System|
+:Update Status to "Shipped";
+:Send Tracking Email to Customer;
+stop
+@enduml

@@ -1,0 +1,42 @@
+@startuml
+|Supplier/Driver|
+start
+:Arrive at Dock;
+:Provide Delivery Note;
+
+|Warehouse Operator|
+:Scan Delivery Note Barcode;
+|System|
+:Retrieve Purchase Order (PO);
+if (PO Valid & Approved?) then (yes)
+  |Warehouse Operator|
+  :Unload Goods;
+  :Count & Inspect Items;
+  if (Items Damaged?) then (yes)
+    :Scan as "Damaged";
+    |System|
+    :Status = "Quarantined";
+    :Alert Procurement;
+  else (no)
+    |Warehouse Operator|
+    :Scan as "Good";
+    |System|
+    :Status = "Available";
+  endif
+  |System|
+  :Generate Put-Away Task;
+  
+  |Warehouse Operator|
+  :Move to Suggested Bin;
+  :Scan Bin Barcode;
+  :Scan Item Barcode;
+  
+  |System|
+  :Confirm Location Match;
+  :Update Inventory Ledger;
+else (no)
+  |Warehouse Operator|
+  :Reject Delivery;
+endif
+stop
+@enduml

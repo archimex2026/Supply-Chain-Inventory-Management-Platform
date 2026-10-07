@@ -1,0 +1,50 @@
+@startuml
+entity "Supplier" as S {
+  * supplier_id : INT <<PK>>
+  --
+  name : VARCHAR
+  contact_email : VARCHAR
+  rating : DECIMAL
+}
+
+entity "PurchaseOrder" as PO {
+  * po_id : INT <<PK>>
+  --
+  supplier_id : INT <<FK>>
+  created_date : DATE
+  total_amount : DECIMAL
+  status : VARCHAR
+}
+
+entity "POLineItem" as POLI {
+  * line_id : INT <<PK>>
+  --
+  po_id : INT <<FK>>
+  item_id : INT <<FK>>
+  quantity : INT
+  unit_price : DECIMAL
+}
+
+entity "InventoryItem" as II {
+  * item_id : INT <<PK>>
+  --
+  sku : VARCHAR
+  name : VARCHAR
+  qty_on_hand : INT
+  reorder_point : INT
+}
+
+entity "WarehouseBin" as WB {
+  * bin_id : INT <<PK>>
+  --
+  warehouse_id : INT <<FK>>
+  aisle : VARCHAR
+  rack : VARCHAR
+}
+
+S ||--o{ PO : "places"
+PO ||--|{ POLI : "contains"
+POLI }o--|| II : "references"
+II }o--o{ WB : "stored in"
+
+@enduml

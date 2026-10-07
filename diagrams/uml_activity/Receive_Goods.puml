@@ -1,0 +1,32 @@
+@startuml
+|Delivery Driver|
+start
+:Arrive at Warehouse Dock;
+:Hand over Delivery Manifest;
+
+|Warehouse Operator|
+:Receive Delivery Manifest;
+:Locate corresponding PO in System;
+if (PO Found & Approved?) then (yes)
+  :Unload Goods;
+  :Perform Quality Inspection;
+  if (Goods Damaged?) then (yes)
+    :Quarantine Damaged Items;
+    :Log Discrepancy/Damage Report;
+  else (no)
+    :Count received quantities;
+  endif
+  :Enter Goods Receipt (GR) in System;
+  
+  |System|
+  :Update Inventory Quantities;
+  :Update PO Status (Partial/Fulfilled);
+  
+  |Warehouse Operator|
+  :Put away items to Storage Bins;
+else (no)
+  :Reject Delivery;
+  :Return Goods to Driver;
+endif
+stop
+@enduml
